@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Menu, ChevronDown, Folder, CloudCheck, Help } from './icons'
 import './DocumentHeader.css'
 
-const DocumentHeader = ({ autoOpenSend = false } = {}) => {
+const DocumentHeader = ({ autoOpenSend = false, onDownloaded, triggerSend = 0, hasDownloaded = false } = {}) => {
   const [isInviteOpen, setIsInviteOpen] = useState(false)
   const [isReviewOpen, setIsReviewOpen] = useState(false)
   const [isFileMenuOpen, setIsFileMenuOpen] = useState(false)
@@ -56,6 +56,12 @@ const DocumentHeader = ({ autoOpenSend = false } = {}) => {
     return () => clearTimeout(t)
   }, [autoOpenSend])
 
+  useEffect(() => {
+    if (triggerSend > 0) {
+      setIsReviewOpen(true)
+    }
+  }, [triggerSend])
+
   const openSend = () => {
     setIsFileMenuOpen(false)
     setIsInviteOpen(false)
@@ -70,11 +76,12 @@ const DocumentHeader = ({ autoOpenSend = false } = {}) => {
   const proceedDownload = () => {
     setShowDownloadNudge(false)
     setSuccessMessage({
-      title: 'Downloaded as PDF 📄',
-      description: 'Tip: downloaded files won’t include a signing certificate or audit trail.'
+      title: 'Downloaded as PDF',
+      description: 'Your download doesn\u2019t include a signing certificate or audit trail.'
     })
-    setSuccessAction({ label: 'Send for signature — free', onClick: openSend })
+    setSuccessAction({ label: 'Send for signature instead', onClick: openSend })
     setShowSuccessDialog(true)
+    if (onDownloaded) onDownloaded()
     setTimeout(() => {
       setShowSuccessDialog(false)
       setSuccessAction(null)
@@ -586,7 +593,7 @@ const DocumentHeader = ({ autoOpenSend = false } = {}) => {
         
         <div className="dropdown-wrapper" ref={reviewRef}>
           <button 
-            className="btn-primary"
+            className={`btn-primary${hasDownloaded ? ' pulse-send' : ''}`}
             onClick={() => setIsReviewOpen(!isReviewOpen)}
           >
             <span>Review and send</span>

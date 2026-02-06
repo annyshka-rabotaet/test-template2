@@ -283,3 +283,138 @@
 .action-label {
   flex: 1;
 }
+
+/* ── Document Readiness Tracker ── */
+.readiness-card {
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(36, 133, 103, 0.15);
+  background: linear-gradient(180deg, rgba(36, 133, 103, 0.05) 0%, rgba(36, 133, 103, 0.01) 100%);
+}
+
+.readiness-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.readiness-title {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  color: var(--color-secondary-main);
+}
+
+.readiness-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-left: 2px;
+}
+
+.readiness-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.readiness-step.completed span {
+  color: var(--color-secondary-lighter);
+  text-decoration: line-through;
+  text-decoration-color: rgba(118, 118, 118, 0.4);
+}
+
+.readiness-step.next-step span {
+  color: var(--color-secondary-main);
+  font-weight: 600;
+}
+
+.readiness-step.warning span {
+  color: #b44;
+  font-weight: 500;
+}
+
+.step-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(36, 133, 103, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.readiness-step.next-step .step-circle {
+  border-color: #248567;
+  color: #248567;
+  background-color: rgba(36, 133, 103, 0.08);
+}
+
+.readiness-step.warning .step-circle {
+  border-color: #b44;
+  color: #b44;
+  background-color: rgba(187, 68, 68, 0.08);
+  animation: warningPulse 1.5s ease-in-out 3;
+}
+
+@keyframes warningPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.readiness-footer {
+  padding-top: 2px;
+}
+
+.readiness-cta {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #248567;
+  color: white;
+  border-radius: 8px;
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 16px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.readiness-cta:hover {
+  background-color: #1f7359;
+  transform: translateY(-1px);
+}
+
+.readiness-hint {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-secondary-lighter);
+  display: block;
+}

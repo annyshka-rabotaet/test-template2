@@ -920,6 +920,42 @@
   background-color: #1f7359;
 }
 
+/* Send button pulse after download */
+.btn-primary.pulse-send {
+  animation: sendPulse 2s ease-in-out infinite;
+  position: relative;
+}
+
+.btn-primary.pulse-send::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  border: 2px solid rgba(36, 133, 103, 0.5);
+  animation: sendRing 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes sendPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(36, 133, 103, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(36, 133, 103, 0);
+  }
+}
+
+@keyframes sendRing {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+}
+
 /* Certificate preview */
 .certificate-card {
   width: min(640px, 100%);

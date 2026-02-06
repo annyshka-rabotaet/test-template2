@@ -46,3 +46,127 @@
     --header-height: 96px;
   }
 }
+
+/* ── Post-Download Recovery Bar ── */
+.recovery-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10001;
+  animation: recoverySlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes recoverySlideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.recovery-bar-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #f0faf5 0%, #e8f3ee 100%);
+  border-top: 2px solid rgba(36, 133, 103, 0.25);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.1);
+}
+
+.recovery-bar-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.recovery-bar-text {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  color: var(--color-secondary-main);
+  white-space: nowrap;
+}
+
+.recovery-bar-badges {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.recovery-badge {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background-color: rgba(36, 133, 103, 0.1);
+  color: #1a6b50;
+  border: 1px solid rgba(36, 133, 103, 0.18);
+  white-space: nowrap;
+}
+
+.recovery-bar-cta {
+  margin-left: auto;
+  padding: 9px 18px;
+  background-color: #248567;
+  color: white;
+  border-radius: 6px;
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 16px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+  border: none;
+  flex-shrink: 0;
+}
+
+.recovery-bar-cta:hover {
+  background-color: #1f7359;
+  transform: translateY(-1px);
+}
+
+.recovery-bar-close {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--color-secondary-lighter);
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: background-color 0.15s ease;
+}
+
+.recovery-bar-close:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 768px) {
+  .recovery-bar-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  .recovery-bar-badges {
+    display: none;
+  }
+
+  .recovery-bar-text {
+    flex: 1 1 auto;
+    white-space: normal;
+  }
+}
