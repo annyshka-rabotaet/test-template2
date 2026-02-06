@@ -449,3 +449,144 @@
 .dropped-field:hover svg {
   opacity: 1;
 }
+
+/* ── Draft Watermark ── */
+.template-document.is-draft .page::before {
+  content: 'DRAFT';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-family: 'Graphik LC Web', Arial, sans-serif;
+  font-size: 100px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.03);
+  letter-spacing: 18px;
+  pointer-events: none;
+  z-index: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.template-document.is-draft .page.cover::before {
+  color: rgba(255, 255, 255, 0.06);
+}
+
+.template-document.is-sent .page::before {
+  display: none;
+}
+
+/* Sent state — certificate seal on last page */
+.template-document.is-sent .page-5::after {
+  content: '';
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(36,133,103,0.08) 0%, transparent 70%);
+  border: 2px solid rgba(36,133,103,0.15);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.template-document.is-sent .page-5::before {
+  content: 'SIGNED';
+  position: absolute;
+  bottom: 72px;
+  right: 55px;
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(36,133,103,0.4);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ── Inline Signing Prompt ── */
+.inline-sign-prompt {
+  margin-top: 2.5em;
+  position: relative;
+  z-index: 2;
+  animation: inlinePromptFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes inlinePromptFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inline-sign-prompt-inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 28px;
+  border: 1px solid rgba(36, 133, 103, 0.2);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(36, 133, 103, 0.04) 0%, rgba(36, 133, 103, 0.01) 100%);
+}
+
+.inline-prompt-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.inline-prompt-content {
+  flex: 1;
+}
+
+.inline-prompt-title {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #2f2f2f;
+  margin: 0 0 4px 0;
+}
+
+.inline-prompt-subtitle {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #767676;
+  margin: 0;
+}
+
+.inline-prompt-cta {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  background-color: #248567;
+  color: white;
+  border-radius: 8px;
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 16px;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.inline-prompt-cta:hover {
+  background-color: #1f7359;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .inline-sign-prompt-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 18px;
+  }
+}

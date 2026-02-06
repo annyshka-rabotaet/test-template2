@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Signature, Initials, TextIcon, Calendar, Reorder, ChevronDown } from './icons'
 import './AddFieldsSidebar.css'
 
@@ -35,7 +35,7 @@ const FillableField = ({ icon: Icon, label, color = 1, fieldType }) => {
   )
 }
 
-const ReadinessTracker = ({ hasDownloaded, onSendClick }) => (
+const ReadinessTracker = ({ hasDownloaded, hasSent, onSendClick }) => (
   <div className="readiness-card">
     <div className="readiness-header">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -57,7 +57,14 @@ const ReadinessTracker = ({ hasDownloaded, onSendClick }) => (
         </div>
         <span>Document ready</span>
       </div>
-      {hasDownloaded ? (
+      {hasSent ? (
+        <div className="readiness-step completed">
+          <div className="step-check">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#248567"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
+          <span>Sent for signature</span>
+        </div>
+      ) : hasDownloaded ? (
         <div className="readiness-step warning">
           <div className="step-circle">!</div>
           <span>Downloaded without protection</span>
@@ -70,7 +77,11 @@ const ReadinessTracker = ({ hasDownloaded, onSendClick }) => (
       )}
     </div>
     <div className="readiness-footer">
-      {hasDownloaded ? (
+      {hasSent ? (
+        <span className="readiness-hint readiness-done">
+          Signing certificate and audit trail included
+        </span>
+      ) : hasDownloaded ? (
         <button className="readiness-cta" onClick={onSendClick}>
           Send now — get a signing certificate
         </button>
@@ -83,38 +94,102 @@ const ReadinessTracker = ({ hasDownloaded, onSendClick }) => (
   </div>
 )
 
-const AddFieldsSidebar = ({ hasDownloaded = false, onSendClick }) => {
+const ReadyToSendView = ({ onSendClick, onBackToFields, hasDownloaded, hasSent }) => {
+  const [email, setEmail] = useState('')
+
+  return (
+    <div className="sidebar-content ready-content">
+      <div className="ready-to-send-section">
+        <div className="ready-checkmark">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" fill="rgba(36,133,103,0.1)" stroke="#248567" strokeWidth="1.5"/>
+            <path d="M8 12l3 3 5-5" stroke="#248567" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        <h3 className="ready-question">Who needs to sign this agreement?</h3>
+        <div className="ready-input-group">
+          <label className="ready-label">Recipient email</label>
+          <input
+            type="email"
+            placeholder="name@company.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="ready-email-input"
+          />
+        </div>
+        <button className="ready-send-btn" onClick={onSendClick}>
+          Send for signature
+        </button>
+        <p className="ready-note">
+          Your counterparty can sign in under 60 seconds. You'll both receive a signed copy with a legal certificate.
+        </p>
+      </div>
+
+      <div className="divider-horizontal" />
+
+      <ReadinessTracker hasDownloaded={hasDownloaded} hasSent={hasSent} onSendClick={onSendClick} />
+
+      <button className="back-to-fields-btn" onClick={onBackToFields}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+        Back to fields
+      </button>
+    </div>
+  )
+}
+
+const AddFieldsSidebar = ({ hasDownloaded = false, hasSent = false, onSendClick, showReadyToSend = false }) => {
+  const [mode, setMode] = useState('fields')
+
+  useEffect(() => {
+    if (showReadyToSend && mode === 'fields') {
+      setMode('ready')
+    }
+  }, [showReadyToSend])
+
   return (
     <div className="add-fields-sidebar">
       <div className="sidebar-header">
-        <h2 className="sidebar-title">Add fillable fields</h2>
+        <h2 className="sidebar-title">
+          {mode === 'ready' ? 'Almost done' : 'Add fillable fields'}
+        </h2>
       </div>
-      
-      <div className="sidebar-content">
-        <div className="fields-section">
-          <div className="person-card">
-            <UserAvatar initials="NW" color={1} />
-            <div className="person-info">
-              <div className="person-name">Noah Walker</div>
-              <div className="person-email">noah.walker@sealdocs.com</div>
+
+      {mode === 'ready' ? (
+        <ReadyToSendView
+          onSendClick={onSendClick}
+          onBackToFields={() => setMode('fields')}
+          hasDownloaded={hasDownloaded}
+          hasSent={hasSent}
+        />
+      ) : (
+        <div className="sidebar-content">
+          <div className="fields-section">
+            <div className="person-card">
+              <UserAvatar initials="NW" color={1} />
+              <div className="person-info">
+                <div className="person-name">Noah Walker</div>
+                <div className="person-email">noah.walker@sealdocs.com</div>
+              </div>
+              <button type="button" className="person-card-btn" aria-label="Select person">
+                <ChevronDown />
+              </button>
             </div>
-            <button type="button" className="person-card-btn" aria-label="Select person">
-              <ChevronDown />
-            </button>
+
+            <div className="fields-list">
+              <FillableField icon={Signature} label="Signature" color={1} fieldType="signature" />
+              <FillableField icon={Initials} label="Initials" color={1} fieldType="initials" />
+              <FillableField icon={TextIcon} label="Text field" color={1} fieldType="text" />
+              <FillableField icon={Calendar} label="Date" color={1} fieldType="date" />
+            </div>
           </div>
-          
-          <div className="fields-list">
-            <FillableField icon={Signature} label="Signature" color={1} fieldType="signature" />
-            <FillableField icon={Initials} label="Initials" color={1} fieldType="initials" />
-            <FillableField icon={TextIcon} label="Text field" color={1} fieldType="text" />
-            <FillableField icon={Calendar} label="Date" color={1} fieldType="date" />
-          </div>
+
+          <div className="divider-horizontal" />
+
+          <ReadinessTracker hasDownloaded={hasDownloaded} hasSent={hasSent} onSendClick={onSendClick} />
         </div>
-
-        <div className="divider-horizontal" />
-
-        <ReadinessTracker hasDownloaded={hasDownloaded} onSendClick={onSendClick} />
-      </div>
+      )}
     </div>
   )
 }

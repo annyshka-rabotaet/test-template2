@@ -84,6 +84,22 @@
   border-radius: 12px;
 }
 
+/* Social proof hint */
+.social-proof-hint {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--color-secondary-lighter);
+  white-space: nowrap;
+  padding-left: 4px;
+}
+
+@media (max-width: 1024px) {
+  .social-proof-hint {
+    display: none;
+  }
+}
+
 .menu-bar {
   display: flex;
   align-items: center;

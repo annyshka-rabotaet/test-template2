@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Menu, ChevronDown, Folder, CloudCheck, Help } from './icons'
 import './DocumentHeader.css'
 
-const DocumentHeader = ({ autoOpenSend = false, onDownloaded, triggerSend = 0, hasDownloaded = false } = {}) => {
+const DocumentHeader = ({ autoOpenSend = false, onDownloaded, onSent, triggerSend = 0, hasDownloaded = false, hasSent = false } = {}) => {
   const [isInviteOpen, setIsInviteOpen] = useState(false)
   const [isReviewOpen, setIsReviewOpen] = useState(false)
   const [isFileMenuOpen, setIsFileMenuOpen] = useState(false)
@@ -110,6 +110,7 @@ const DocumentHeader = ({ autoOpenSend = false, onDownloaded, triggerSend = 0, h
     })
     setSuccessAction(null)
     setShowSuccessDialog(true)
+    if (onSent) onSent()
     setTimeout(() => {
       setShowSuccessDialog(false)
       setTimeout(() => setShowCompletionDialog(true), 500)
@@ -124,6 +125,7 @@ const DocumentHeader = ({ autoOpenSend = false, onDownloaded, triggerSend = 0, h
     })
     setSuccessAction(null)
     setShowSuccessDialog(true)
+    if (onSent) onSent()
     setTimeout(() => {
       setShowSuccessDialog(false)
       setTimeout(() => setShowCompletionDialog(true), 500)
@@ -147,7 +149,8 @@ const DocumentHeader = ({ autoOpenSend = false, onDownloaded, triggerSend = 0, h
           <div className="document-heading">
             <div className="title-with-icons">
               <h1 className="document-title">Car Rental Agreement Template</h1>
-              <span className="status-badge">Draft</span>
+              <span className="status-badge">{hasSent ? 'Sent' : 'Draft'}</span>
+              {!hasSent && <span className="social-proof-hint">14,832 agreements signed this week</span>}
               <Folder />
               <CloudCheck />
             </div>

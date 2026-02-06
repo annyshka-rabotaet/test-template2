@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, Plus } from './icons'
 import './DocumentCanvas.css'
 
@@ -12,8 +12,32 @@ const PageTitle = () => (
   </div>
 )
 
-const DocumentCanvas = () => {
+const InlineSignPrompt = ({ onSend }) => (
+  <div className="inline-sign-prompt">
+    <div className="inline-sign-prompt-inner">
+      <div className="inline-prompt-icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z" fill="#248567" opacity="0.12"/>
+          <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z" stroke="#248567" strokeWidth="1.5" fill="none"/>
+          <path d="M9 12l2 2 4-4" stroke="#248567" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </div>
+      <div className="inline-prompt-content">
+        <p className="inline-prompt-title">Your agreement is ready.</p>
+        <p className="inline-prompt-subtitle">
+          Your counterparty can sign this in under 60 seconds. You'll both get a signed copy with a legal certificate.
+        </p>
+      </div>
+      <button className="inline-prompt-cta" onClick={onSend}>
+        Send for signature — free
+      </button>
+    </div>
+  </div>
+)
+
+const DocumentCanvas = ({ hasSent = false, onSignatureVisible, showInlinePrompt = false, onSendFromPrompt }) => {
   const documentRef = useRef(null)
+  const signaturePageRef = useRef(null)
   const [droppedFields, setDroppedFields] = useState([])
   const [isDraggingOver, setIsDraggingOver] = useState(false)
 
@@ -55,6 +79,23 @@ const DocumentCanvas = () => {
   const handleFieldClick = (fieldId) => {
     setDroppedFields(prev => prev.filter(f => f.id !== fieldId))
   }
+
+  // Observe signature page visibility
+  useEffect(() => {
+    if (!signaturePageRef.current || !onSignatureVisible) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          onSignatureVisible()
+        }
+      },
+      { threshold: 0.25 }
+    )
+
+    observer.observe(signaturePageRef.current)
+    return () => observer.disconnect()
+  }, [onSignatureVisible])
 
   useEffect(() => {
     // Make text elements editable
@@ -123,7 +164,7 @@ const DocumentCanvas = () => {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
-        <article className="template-document">
+        <article className={`template-document ${hasSent ? 'is-sent' : 'is-draft'}`}>
           {/* Page 0 - Cover */}
           <div className="page cover page-0">
             <div className="text-block block" style={{position:'absolute', top:'16.2879%', left:'7.7206%', width:'84.6814%', height:'auto'}}>
@@ -317,7 +358,7 @@ const DocumentCanvas = () => {
           </div>
 
           {/* Page 5 - Signatures */}
-          <div className="page content page-5">
+          <div className="page content page-5" ref={signaturePageRef}>
             <div className="text-block block">
               <h2>11. Entire agreement</h2>
             </div>
@@ -396,6 +437,11 @@ const DocumentCanvas = () => {
                 </div>
               </div>
             </div>
+
+            {/* Inline signing prompt — appears when user scrolls to signatures */}
+            {showInlinePrompt && !hasSent && (
+              <InlineSignPrompt onSend={onSendFromPrompt} />
+            )}
           </div>
         </article>
 
