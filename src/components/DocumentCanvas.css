@@ -451,7 +451,7 @@
 }
 
 /* ── Draft Watermark ── */
-.template-document.is-draft .page::before {
+.template-document.is-draft .page:not(.cover)::before {
   content: 'DRAFT';
   position: absolute;
   top: 50%;
@@ -466,10 +466,6 @@
   z-index: 1;
   white-space: nowrap;
   user-select: none;
-}
-
-.template-document.is-draft .page.cover::before {
-  color: rgba(255, 255, 255, 0.06);
 }
 
 .template-document.is-sent .page::before {
