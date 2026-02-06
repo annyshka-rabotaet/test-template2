@@ -1,0 +1,451 @@
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700,700i&display=swap");
+
+.page-title {
+  position: absolute;
+  top: 24px;
+  left: var(--canvas-left);
+  width: calc(100% - var(--canvas-left) - var(--right-sidebar-width));
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 50;
+}
+
+.page-info {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--color-secondary-lighter);
+}
+
+.page-info-text {
+  text-align: right;
+}
+
+.page-separator {
+  white-space: pre;
+}
+
+.page-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-nav-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-s);
+  color: var(--color-secondary-light);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.page-nav-btn:hover {
+  background-color: var(--color-opacity-hover);
+}
+
+.document-canvas {
+  position: absolute;
+  top: var(--canvas-top);
+  left: var(--canvas-left);
+  width: calc(100% - var(--canvas-left) - var(--right-sidebar-width));
+  height: calc(100% - var(--canvas-top));
+  overflow-y: auto;
+  padding: 20px 0;
+  background-color: #f8f9fa;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.document-canvas.drag-over {
+  background-color: #e8f4f0;
+}
+
+/* Template document container */
+.template-document {
+  max-width: 1110px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1280px) {
+  .page-title,
+  .document-canvas {
+    width: calc(100% - var(--canvas-left) - var(--right-sidebar-width));
+  }
+}
+
+@media (max-width: 1024px) {
+  .page-title,
+  .document-canvas {
+    width: calc(100% - (var(--canvas-left) * 2));
+  }
+
+  .document-canvas {
+    max-width: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 8px 16px 0;
+  }
+
+  .document-canvas {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    min-height: 520px;
+    padding: 16px 0 24px;
+  }
+}
+
+/* Page styles */
+.page {
+  margin: 0 auto 20px auto;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.15);
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 1);
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.page:not(.landscape) {
+  min-height: 1056px;
+  max-width: 816px;
+}
+
+.page.cover {
+  font-size: 16px;
+}
+
+.page.content {
+  font-size: 16px;
+  padding: 65px 50px;
+}
+
+.page p,
+.page h1,
+.page h2,
+.page h3,
+.page h4,
+.page h5 {
+  margin: 0;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.page > div {
+  position: relative;
+}
+
+/* Page backgrounds */
+.page-0 {
+  background-color: rgba(220, 222, 230, 1);
+}
+
+.page-0:before {
+  inset: 0;
+  content: "";
+  opacity: 1;
+  position: absolute;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-image: url(https://public-site.marketing.pandadoc-static.com/app/uploads/car-rental-agreement-template-1.jpg);
+}
+
+.page-1,
+.page-2,
+.page-3,
+.page-4,
+.page-5 {
+  background-color: rgba(254, 254, 255, 1);
+}
+
+/* Text blocks */
+.text-block {
+  position: relative;
+}
+
+.text-block.block:not(:last-child) {
+  margin-bottom: 1.63em;
+}
+
+.text-block p {
+  color: #000000;
+  font-size: 1em;
+  margin-top: 0;
+  text-align: left;
+  font-family: 'IBM Plex Sans', sans-serif;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.text-block p[contenteditable="true"],
+.text-block h1[contenteditable="true"],
+.text-block h2[contenteditable="true"],
+.text-block h3[contenteditable="true"],
+.text-block h4[contenteditable="true"],
+.text-block h5[contenteditable="true"] {
+  outline: none;
+  cursor: text;
+}
+
+.text-block p[contenteditable="true"]:focus,
+.text-block h1[contenteditable="true"]:focus,
+.text-block h2[contenteditable="true"]:focus,
+.text-block h3[contenteditable="true"]:focus,
+.text-block h4[contenteditable="true"]:focus,
+.text-block h5[contenteditable="true"]:focus {
+  background-color: rgba(249, 236, 192, 0.3);
+  border-radius: 2px;
+}
+
+.text-block p[contenteditable="true"]:hover,
+.text-block h1[contenteditable="true"]:hover,
+.text-block h2[contenteditable="true"]:hover,
+.text-block h3[contenteditable="true"]:hover,
+.text-block h4[contenteditable="true"]:hover,
+.text-block h5[contenteditable="true"]:hover {
+  background-color: rgba(249, 236, 192, 0.15);
+}
+
+.text-block h1,
+.text-block h2,
+.text-block h3,
+.text-block h4,
+.text-block h5 {
+  color: #434343;
+  text-align: left;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: bold;
+  line-height: 1.25;
+}
+
+.text-block h1 {
+  font-size: 1.88em;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+.text-block h2 {
+  font-size: 1.5em;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.text-block h3 {
+  font-size: 0.88em;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+/* Tokens */
+.token {
+  padding: 1px 3px 2px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.token-empty {
+  background-color: rgba(255, 238, 51, 0.5);
+}
+
+.token-filled {
+  box-shadow: rgb(255 212 0 / 90%) 0px 0px 0px 1px inset;
+}
+
+.token-input {
+  color: #8d8d8d;
+  width: 100%;
+  display: inline-block;
+  max-width: 12em;
+  background: rgba(249, 236, 192, 0.7);
+  box-shadow: inset 0 0 0 1px #f8d278, 0 0 0 1px rgba(248, 210, 120, 0);
+  line-height: 1;
+  padding: 0.4em 0.8em;
+}
+
+.token-input.date {
+  display: inline-flex !important;
+  padding: 0.4em 0.4em 0.4em 0.8em;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.token-input.signature {
+  padding: 1.6em 0.8em;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Tables */
+.table-block {
+  margin-bottom: 1.63em;
+}
+
+.table {
+  width: 100%;
+  margin-top: 0.5em;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.table-d0 .table-cell {
+  border-bottom: 1px dotted #65656f;
+  padding: 0.44em;
+}
+
+.table-d0 .table-cell:not(:last-child) {
+  border-right: 1px dotted #65656f;
+}
+
+.table-d1 .table-cell {
+  border-bottom: 1px dotted #65656f;
+  padding: 0.44em;
+}
+
+.table-d1 .table-cell:not(:last-child) {
+  border-right: 1px dotted #65656f;
+}
+
+.table-data-row {
+  color: #000000;
+  font-size: 1em;
+  text-align: left;
+  font-family: 'IBM Plex Sans', sans-serif;
+  line-height: 1.5;
+}
+
+.table-cell p[contenteditable="true"] {
+  outline: none;
+  cursor: text;
+  min-height: 1.5em;
+}
+
+.table-cell p[contenteditable="true"]:focus {
+  background-color: rgba(249, 236, 192, 0.3);
+  border-radius: 2px;
+}
+
+.table-cell p[contenteditable="true"]:hover {
+  background-color: rgba(249, 236, 192, 0.15);
+}
+
+.absolute-block-wrapper {
+  padding: 6px 8px;
+}
+
+.block {
+  position: relative;
+}
+
+/* Columns and rows */
+.row {
+  display: flex;
+  margin: 0 -0.81em;
+}
+
+.row:not(:last-child) {
+  margin-bottom: 1.63em;
+}
+
+.column {
+  display: flex;
+  padding: 0 0.81em;
+  flex-direction: column;
+}
+
+/* Fields */
+.field {
+  margin: 0;
+  z-index: 100;
+  position: relative;
+}
+
+.date-field {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.signature-field {
+  padding: 1.6em 0.8em;
+  text-align: center;
+}
+
+/* Images */
+.image {
+  height: auto;
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Dropped Fields */
+.dropped-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 2px solid;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1000;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  user-select: none;
+}
+
+.dropped-field:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dropped-field.color-1 {
+  background-color: var(--color-field-1-fill);
+  border-color: var(--color-field-1-outline);
+  color: var(--color-field-1-text);
+}
+
+.dropped-field.color-2 {
+  background-color: var(--color-field-2-fill);
+  border-color: var(--color-field-2-outline);
+  color: var(--color-field-2-text);
+}
+
+.dropped-field-label {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.dropped-field svg {
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.dropped-field:hover svg {
+  opacity: 1;
+}

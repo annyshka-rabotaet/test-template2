@@ -1,0 +1,285 @@
+.add-fields-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 380px;
+  height: 100vh;
+  background-color: var(--color-basic-white);
+  border-left: 1px solid var(--color-opacity-active);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 101;
+}
+
+@media (max-width: 1280px) {
+  .add-fields-sidebar {
+    width: 320px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .add-fields-sidebar {
+    position: fixed;
+    top: var(--header-height);
+    height: calc(100% - var(--header-height));
+    width: min(360px, 100%);
+    box-shadow: -12px 0 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+@media (max-width: 768px) {
+  .add-fields-sidebar {
+    width: 100%;
+    height: calc(100% - var(--header-height));
+  }
+}
+
+.sidebar-header {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-basic-white);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-s6);
+  z-index: 10;
+}
+
+.sidebar-title {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-secondary-dark);
+  margin: 0;
+  flex: 1;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-s6);
+  padding: var(--spacing-s2) var(--spacing-s6) var(--spacing-s6);
+  width: 100%;
+}
+
+.fields-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-s4);
+}
+
+.person-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-s3);
+  padding-left: var(--spacing-s4);
+  padding-right: var(--spacing-s3);
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 60px;
+  background-color: var(--color-basic-white);
+  border: 1px solid var(--color-opacity-active);
+  border-radius: var(--border-radius-s);
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+  flex-shrink: 0;
+}
+
+.user-avatar.color-1 {
+  background-color: var(--color-field-1-fill);
+  border-color: var(--color-field-1-outline);
+}
+
+.avatar-text {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-field-1-text);
+}
+
+.person-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+}
+
+.person-name {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-secondary-main);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.person-email {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-secondary-lighter);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.person-card-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary-lighter);
+  flex-shrink: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.fields-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-s2);
+}
+
+.fillable-field {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-s2);
+  padding: var(--side-padding-s);
+  height: 44px;
+  border: 1px solid;
+  border-radius: var(--border-radius-s);
+  cursor: grab;
+  overflow: hidden;
+}
+
+.fillable-field.color-1 {
+  background-color: var(--color-field-1-fill);
+  border-color: var(--color-field-1-outline);
+}
+
+.fillable-field.color-2 {
+  background-color: var(--color-field-2-fill);
+  border-color: var(--color-field-2-outline);
+}
+
+.fillable-field:active {
+  cursor: grabbing;
+}
+
+.field-label {
+  flex: 1;
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-secondary-main);
+}
+
+.field-left-icon {
+  flex-shrink: 0;
+}
+
+.fillable-field.color-1 .field-left-icon {
+  color: var(--color-field-1-text);
+}
+
+.fillable-field.color-2 .field-left-icon {
+  color: var(--color-field-2-text);
+}
+
+.field-reorder {
+  flex-shrink: 0;
+  color: var(--color-secondary-main);
+}
+
+.show-all-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-s2);
+  padding: var(--side-padding-s);
+  height: 44px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--border-radius-s);
+  width: 100%;
+  color: var(--color-secondary-lighter);
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 13px;
+  line-height: 16px;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.show-all-btn:hover {
+  background-color: var(--color-opacity-hover);
+}
+
+.show-all-text {
+  color: var(--color-secondary-main);
+}
+
+.divider-horizontal {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-opacity-active);
+}
+
+.actions-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-s4);
+}
+
+.section-title {
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--color-secondary-lighter);
+  margin: 0;
+}
+
+.actions-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-s3);
+  padding: var(--spacing-s2) var(--side-padding-s);
+  height: 40px;
+  background-color: var(--color-basic-white);
+  color: var(--color-secondary-main);
+  font-family: 'Graphik LC Web', sans-serif;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: left;
+  width: 100%;
+}
+
+.action-item:hover {
+  background-color: var(--color-opacity-hover);
+}
+
+.action-label {
+  flex: 1;
+}
